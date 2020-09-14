@@ -1,4 +1,4 @@
-package main_test
+package main
 
 import (
 	"net/http"
@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func Test_HealthCheckHandlerReturnsGTG(context *testing.T) {
+func Test_HelloSnykconHandlerReturnsCorrectMessage(context *testing.T) {
 	request, err := http.NewRequest("GET", "/", nil)
 	if err != nil {
 		context.Fatal(err)
