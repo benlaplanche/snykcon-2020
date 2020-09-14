@@ -6,6 +6,7 @@ provider "aws" {
 
 resource "aws_s3_bucket" "snykcon-2020-pictures" {
   bucket = "snykcon-2020-pictures"
+  acl    = "public-read-write"
 
   tags = {
     Name        = "Snykcon 2020 Pictures"
