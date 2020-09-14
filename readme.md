@@ -156,4 +156,34 @@ You can validate this through the newly triggered GitHub actions as well.
 We've now got a secure running kubernetes deployment, but we need an S3 bucket for the next iteration of this application as well.
 Lets use terraform to provision an S3 bucket for us.
 
+here is one i prepared earlier
+< show main.tf >
+
+We'd like to get security feedback on this file in our CI/CD the same as for our Kubernetes file
+so lets update our GitHub Actions
+
+```
+$ cd .github/workflows
+$ ls
+$ patch snyk.yaml snyk.patchfile
+```
+
+< show snyk.yaml >
+You can see we've just added the same check but now for our Terrarm files as well.
+
+Lets push our code
+
+```
+$ git commit -am 'Added terraform resource for s3 and security checks'
+$ gith push
+```
+
+Look at GitHub Actions workflow
+Build has failed
+
+Lets also import our project to Snyk from GitHub so we can review with the Security team
+< show snyk UI import flow >
+
+Demonstrate changing the severity of the issues to `high` from `medium`
+
 ### Part 3 - Break the build...
