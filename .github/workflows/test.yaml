@@ -1,10 +1,5 @@
-name: Go
-
-on:
-  push:
-    branches: [$default-branch]
-  pull_request:
-    branches: [$default-branch]
+name: Run Golang tests
+on: [push, pull_request]
 
 jobs:
   build:
