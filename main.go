@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func hello(w http.ResponseWriter, req *http.Request) {
+func HelloSnykcon(w http.ResponseWriter, req *http.Request) {
 
 	fmt.Fprintf(w, "Hello Snykcon 2020!!!\n")
 }
@@ -21,8 +21,8 @@ func headers(w http.ResponseWriter, req *http.Request) {
 
 func main() {
 
-	http.HandleFunc("/", hello)
-	http.HandleFunc("/hello", hello)
+	http.HandleFunc("/", HelloSnykcon)
+	http.HandleFunc("/hello", HelloSnykcon)
 	http.HandleFunc("/headers", headers)
 
 	http.ListenAndServe(":8080", nil)
