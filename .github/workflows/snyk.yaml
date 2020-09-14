@@ -1,0 +1,35 @@
+name: Snyk Infrastructure as Code Security Scan
+
+on: push
+
+jobs:
+  snyk-kubernetes-security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Snyk to check Kubernetes manifest file for issues
+        continue-on-error: true
+        uses: snyk/actions/iac@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          file: deployment.yaml
+          args: --severity-threshold=high
+      # - uses: github/codeql-action/upload-sarif@v1
+      #   with:
+      #     sarif_file: snyk.sarif
+# snyk-terraform-security:
+#   runs-on: ubuntu-latest
+#   steps:
+#     - uses: actions/checkout@v2
+#     - name: Run Snyk to check Terraform config file for issues
+#       continue-on-error: true
+#       uses: snyk/actions/iac@master
+#       env:
+#         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+#       with:
+#         file: main.tf
+#         args: --severity-threshold=high
+#       - uses: github/codeql-action/upload-sarif@v1
+#         with:
+#           sarif_file: snyk.sarif
