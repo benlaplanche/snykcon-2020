@@ -5,6 +5,7 @@ import (
 	"net/http"
 )
 
+// HelloSnykcon exported for tests
 func HelloSnykcon(w http.ResponseWriter, req *http.Request) {
 
 	fmt.Fprintf(w, "Hello Snykcon 2020!!!")
