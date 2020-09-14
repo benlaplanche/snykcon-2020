@@ -1,0 +1,21 @@
+--- snyk.yaml	2020-09-14 19:49:45.000000000 +0100
++++ snyk_secure.yaml	2020-09-14 19:50:09.000000000 +0100
+@@ -17,3 +17,18 @@
+       - uses: github/codeql-action/upload-sarif@v1
+         with:
+           sarif_file: snyk.sarif
++snyk-terraform-security:
++  runs-on: ubuntu-latest
++  steps:
++    - uses: actions/checkout@v2
++    - name: Run Snyk to check Terraform config file for issues
++      continue-on-error: false
++      uses: snyk/actions/iac@master
++      env:
++        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
++      with:
++        file: main.tf
++        args: --severity-threshold=high
++      - uses: github/codeql-action/upload-sarif@v1
++        with:
++          sarif_file: snyk.sarif
