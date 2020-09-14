@@ -186,4 +186,37 @@ Lets also import our project to Snyk from GitHub so we can review with the Secur
 
 Demonstrate changing the severity of the issues to `high` from `medium`
 
+< talk about discussion with the security team >
+
 ### Part 3 - Break the build...
+
+lets update our github actions to break the build & filter on high severity issues
+
+For both jobs change
+`continue-on-error` to be `false`
+
+On the Terraform job add the following argument after the `main.tf` line
+`--severity-threshold=high` this will now only fail on high severity issues
+
+Lets push these changes and check the build is failing
+
+```
+$ git commit -am 'enforce breaking build on high severity config issues'
+$ git push
+```
+
+check the build is failing
+
+Now lets fix the high severity issue
+Change the `acl` to be `private` on the `main.tf` file
+
+Commit changes and push
+
+```
+$ git commit -am 'restricted acl to be private'
+$ git push
+```
+
+Check the build is now passing
+
+Congrats! You have a secured infrastructure.
