@@ -15,10 +15,10 @@ jobs:
         with:
           file: deployment.yaml
           args: --sarif-file-output=deployment.sarif
-      - uses: actions/upload-artifact@v2
-        with:
-          name: SARIF
-          path: deployment.sarif
+      # - uses: actions/upload-artifact@v2
+      #   with:
+      #     name: SARIF
+      #     path: deployment.sarif
       - uses: github/codeql-action/upload-sarif@v1
         with:
           sarif_file: deployment.sarif
