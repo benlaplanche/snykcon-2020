@@ -1,6 +1,8 @@
 name: Snyk Infrastructure as Code Security Scan
 
-on: push
+on:
+  push:
+  workflow_dispatch:
 
 jobs:
   snyk-kubernetes-security:
