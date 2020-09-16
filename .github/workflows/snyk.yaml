@@ -16,7 +16,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           file: deployment.yaml
-          sarif: true
-      - uses: github/codeql-action/upload-sarif@v1
-        with:
-          sarif_file: snyk.sarif
+      #     sarif: true
+      # - uses: github/codeql-action/upload-sarif@v1
+      #   with:
+      #     sarif_file: snyk.sarif

@@ -1,0 +1,251 @@
+{
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Snyk Infrastructure as Code",
+          "rules": [
+            {
+              "id": "SNYK-CC-K8S-4",
+              "shortDescription": {
+                "text": "Low - Memory limits not set"
+              },
+              "fullDescription": {
+                "text": "Kubernetes Deployment"
+              },
+              "help": {
+                "text": ""
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "kubernetes/Deployment"
+                ]
+              }
+            },
+            {
+              "id": "SNYK-CC-K8S-5",
+              "shortDescription": {
+                "text": "Low - CPU limits not set"
+              },
+              "fullDescription": {
+                "text": "Kubernetes Deployment"
+              },
+              "help": {
+                "text": ""
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "kubernetes/Deployment"
+                ]
+              }
+            },
+            {
+              "id": "SNYK-CC-K8S-6",
+              "shortDescription": {
+                "text": "Medium - Containers should ideally be explicit about required capabilities"
+              },
+              "fullDescription": {
+                "text": "Kubernetes Deployment"
+              },
+              "help": {
+                "text": ""
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "kubernetes/Deployment"
+                ]
+              }
+            },
+            {
+              "id": "SNYK-CC-K8S-8",
+              "shortDescription": {
+                "text": "Low - Container not using a read-only root filesystem"
+              },
+              "fullDescription": {
+                "text": "Kubernetes Deployment"
+              },
+              "help": {
+                "text": ""
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "kubernetes/Deployment"
+                ]
+              }
+            },
+            {
+              "id": "SNYK-CC-K8S-10",
+              "shortDescription": {
+                "text": "Medium - Container can run as the root"
+              },
+              "fullDescription": {
+                "text": "Kubernetes Deployment"
+              },
+              "help": {
+                "text": ""
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "kubernetes/Deployment"
+                ]
+              }
+            },
+            {
+              "id": "SNYK-CC-K8S-15",
+              "shortDescription": {
+                "text": "Medium - LoadBalancer Service without SourceRange allows all traffic"
+              },
+              "fullDescription": {
+                "text": "Kubernetes Service"
+              },
+              "help": {
+                "text": ""
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "kubernetes/Service"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "SNYK-CC-K8S-4",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affacting the Kubernetes Deployment"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "deployment.yaml"
+                },
+                "region": {
+                  "startLine": 29
+                }
+              }
+            }
+          ],
+          "suppressions": []
+        },
+        {
+          "ruleId": "SNYK-CC-K8S-5",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affacting the Kubernetes Deployment"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "deployment.yaml"
+                },
+                "region": {
+                  "startLine": 29
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-K8S-6",
+          "message": {
+            "text": "This line contains a potential medium severity misconfiguration affacting the Kubernetes Deployment"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "deployment.yaml"
+                },
+                "region": {
+                  "startLine": 29
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-K8S-8",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affacting the Kubernetes Deployment"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "deployment.yaml"
+                },
+                "region": {
+                  "startLine": 29
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-K8S-10",
+          "message": {
+            "text": "This line contains a potential medium severity misconfiguration affacting the Kubernetes Deployment"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "deployment.yaml"
+                },
+                "region": {
+                  "startLine": 29
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-K8S-15",
+          "message": {
+            "text": "This line contains a potential medium severity misconfiguration affacting the Kubernetes Service"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "deployment.yaml"
+                },
+                "region": {
+                  "startLine": 2
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
