@@ -153,7 +153,9 @@
               }
             }
           ],
-          "suppressions": []
+          "suppressionStates": [
+            "suppressedExternally"
+          ]
         },
         {
           "ruleId": "SNYK-CC-K8S-5",
@@ -243,7 +245,11 @@
                 }
               }
             }
-          ]
+          ],
+          "help": {
+            "markdown": "## Issue \nThat by default with Kubernetes, containers can run as the root user unless you explicitly prevent this. Which does not follow the principles of least privilege.\n\n## Resolve \nAdding the attribute `runAsNonRoot` with the value of `true` to prevent containers being able to run as the Root user, resulting in a more limited set of permissions. \n\n",
+            "text": ""
+          }
         }
       ]
     }
