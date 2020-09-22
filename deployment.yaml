@@ -32,5 +32,3 @@ spec:
           image: benlaplanche/snykcon-2020:latest
           ports:
             - containerPort: 80
-          securityContext:
-            runAsNonRoot: true
