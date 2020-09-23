@@ -1,4 +1,24 @@
 # https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: snykcon-2020-deployment # name of my deployment
+spec:
+  selector:
+    matchLabels:
+      app: snykcon-2020
+  replicas: 2 # run two containers
+  template:
+    metadata:
+      labels:
+        app: snykcon-2020
+    spec:
+      containers:
+        - name: snykcon-2020
+          image: benlaplanche/snykcon-2020:latest # Docker Hub reference
+          ports:
+            - containerPort: 8080 # port to run our container on
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -6,29 +26,9 @@ metadata:
 spec:
   type: LoadBalancer
   loadBalancerSourceRanges:
-    - 127.0.0.0/0
+    - 127.0.0.0/0 # where do we want to allow traffic from
   ports:
-    - port: 8080
+    - port: 8080 # port to expose externally
       targetPort: 8080
   selector:
-    app: snykcon-2020
----
-apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
-kind: Deployment
-metadata:
-  name: snykcon-2020-deployment
-spec:
-  selector:
-    matchLabels:
-      app: snykcon-2020
-  replicas: 2 # tells deployment to run 2 pods matching the template
-  template:
-    metadata:
-      labels:
-        app: snykcon-2020
-    spec:
-      containers:
-        - name: snykcon-2002
-          image: benlaplanche/snykcon-2020:latest
-          ports:
-            - containerPort: 80
+    app: snykcon-2020 # application to bind to
