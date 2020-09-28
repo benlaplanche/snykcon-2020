@@ -35,9 +35,9 @@ And for security teams responsible for assuring the applications and infrastruct
 ## Pre-requisites
 
 - golang 1.14.5
-- pack cli 0.13.1 or greataer from buildpacks.io
-- kubernetes - e.g. Docker Desktop or minikube would suffice
-- snyk cli 1.393 or greater
+- pack cli 0.13.1 or greater from buildpacks.io
+- kubernetes - Docker Desktop or minikube would suffice
+- snyk cli 1.402 or greater
 
 ### Building the container image
 
@@ -46,6 +46,8 @@ You can either use the container image from DockerHub found at `benlaplanche/sny
 ```
 $ pack build snykcon-2020:latest --builder "paketobuildpacks/builder:tiny"
 ```
+
+This is using [Cloud Native Buildpacks](https://buildpacks.io/)
 
 If you have docker running locally you can quickly testing the image is working by
 
@@ -66,24 +68,24 @@ $ docker push benlaplanche/snykcon-2020:latest
 
 ## Demo flow
 
-### Part 1 - Kubernetes development & security
+### Part 1 - Deploy to Kubernetes
 
 Show our basic web app is working
 
 ```
 $ go run main.go
 $ curl localhost:8080
-$ go test
 ```
 
-Here you can see we're getting our hello world message and we have passing tests
+Terminal shows `Hello Snykcon 2020!!!`
 
-We'd like to deploy this to Kubernetes, let reference the example file from [here](https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/)
+Next, deploy to Kubernetes.
+Reference the example file from [here](https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/)
 
-Here is one i prepared earlier `deployment.yaml`
-Matches the reference file, but with the image & deployment names switched. Also with the addition of a load balancer service
+`deployment.yaml` is based on this with the image & deployment names updated.
+It also has the addition of a load balancer service.
 
-Lets check we can deploy and run this to our local Kubernetes running on Docker Desktop
+Deploy to Kubernetes
 
 ```
 $ kubectl apply -f deployment.yaml
@@ -91,12 +93,10 @@ $ kubectl get services
 $ curl localhost:8080
 ```
 
-We should get the same hello snykcon response.
+Terminal shows `Hello Snykcon 2020!!!`
 
-We're practicing CI/CD on this project, so we're going to use GitHub actions to run our application tests
-But also we're going to run the security scanning step powered by Snyk.
-
-< show the github workflow file >
+We're using GitHub actions for our CI/CD in this demo.
+Show the Github workflow file `./github/workflows/snyk.yaml`
 
 Lets commit our code
 
@@ -104,7 +104,7 @@ Lets commit our code
 $ git push
 ```
 
-Check-out the github actions workflow for the security issues
+Review the GitHub actions workflow output (here)[https://github.com/benlaplanche/snykcon-2020/actions]
 
 Lets address these issues locally
 
@@ -120,7 +120,7 @@ securityContext:
   runAsNonRoot: true
 ```
 
-now lets use the local CLI to validate we've address this issue
+Validate we've address this using the CLI
 
 ```
 $ snyk iac test deployment.yaml
@@ -128,13 +128,13 @@ $ snyk iac test deployment.yaml
 
 We can see that this issue has been resolved.
 
-Now lets quickly resolve the rest, given there are a few issues and this is a demo I've made a patch file to speed up the process.
+Quickly address the rest using the patch file
 
 ```
-$ patch deployment.yaml deployment.patchfile
+$ patch deployment.yaml deployment.patch
 ```
 
-lets run the CLI again
+Run the CLI again
 
 ```
 $ snyk iac test deployment.yaml
@@ -151,25 +151,32 @@ $ git push
 
 You can validate this through the newly triggered GitHub actions as well.
 
-### Part 2 - Terraform development & security
+### Part 2 - Provision using Terraform
 
-We've now got a secure running kubernetes deployment, but we need an S3 bucket for the next iteration of this application as well.
-Lets use terraform to provision an S3 bucket for us.
+Deploy an S3 bucket to store our conference pictures in using terraform.
 
-here is one i prepared earlier
-< show main.tf >
+Show `main.tf`
 
-We'd like to get security feedback on this file in our CI/CD the same as for our Kubernetes file
-so lets update our GitHub Actions
+Navigate to (Snyk and import our project)[https://app.snyk.io] from GitHub.
+Show the identified issues in the UI.
+
+### Part 3 - Collaborate with Security
+
+Show changing the severity of an issue in the (Infrastructure as Code settings)[https://app.snyk.io/org/snykcon-2020/manage/cloud-config]
+
+Add Terraform scanning to our GitHub actions.
 
 ```
 $ cd .github/workflows
 $ ls
-$ patch snyk.yaml snyk.patchfile
+$ patch snyk.yaml snyk.patch
 ```
 
-< show snyk.yaml >
-You can see we've just added the same check but now for our Terrarm files as well.
+Show `.github/workflows/snyk.yaml`
+
+Two key differences
+`continue-on-error` is set to `false` which will cause this pipeline step to fail if an issue is identified by Snyk
+`--severity-threshold=high` is passed as an additional argument. This filters the results to only show High severity or higher issues.
 
 Lets push our code
 
@@ -178,36 +185,14 @@ $ git commit -am 'Added terraform resource for s3 and security checks'
 $ gith push
 ```
 
-Look at GitHub Actions workflow
-Build has failed
+Review the GitHub actions workflow output (here)[https://github.com/benlaplanche/snykcon-2020/actions]
+Notice that the Terraform pipeline step has failed.
 
-Lets also import our project to Snyk from GitHub so we can review with the Security team
-< show snyk UI import flow >
+Congratulations, you have reached the end of the demo!
 
-Demonstrate changing the severity of the issues to `high` from `medium`
+### Appendix
 
-< talk about discussion with the security team >
-
-### Part 3 - Break the build...
-
-lets update our github actions to break the build & filter on high severity issues
-
-For both jobs change
-`continue-on-error` to be `false`
-
-On the Terraform job add the following argument after the `main.tf` line
-`--severity-threshold=high` this will now only fail on high severity issues
-
-Lets push these changes and check the build is failing
-
-```
-$ git commit -am 'enforce breaking build on high severity config issues'
-$ git push
-```
-
-check the build is failing
-
-Now lets fix the high severity issue
+If you'd like to address the Terraform issue to have a passing build
 Change the `acl` to be `private` on the `main.tf` file
 
 Commit changes and push
