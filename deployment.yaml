@@ -18,8 +18,6 @@ spec:
           image: benlaplanche/snykcon-2020:latest # Docker Hub reference
           ports:
             - containerPort: 8080 # port to run our container on
-          securityContext:
-            runAsNonRoot: true
 ---
 apiVersion: v1
 kind: Service
