@@ -24,12 +24,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run Snyk to check Terraform config file for issues
-        continue-on-error: true
+        continue-on-error: false
         uses: snyk/actions/iac@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           file: main.tf
+          args: --severity-threshold=high
       - uses: github/codeql-action/upload-sarif@v1
         with:
           sarif_file: snyk.sarif
